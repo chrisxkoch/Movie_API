@@ -1,29 +1,30 @@
 {
-  "name": "Movie_API",
+  "name": "soflix",
   "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
+  "description": "A server­side Node.js component of a “movies” web application. The web application provides users with access to information about different movies, directors, and genres. Users are able to sign up, update their personal information, and create a list of their favorite movies.",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.3"
+  },
+  "devDependencies": {
+    "eslint-plugin-node": "^9.0.1",
+    "eslint": "^5.16.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrisxkoch/Movie_API.git"
+    "url": "git+https://github.com/lorepirri/soflix.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Lorenzo Pirritano",
+  "license": "MIT",
   "bugs": {
-    "url": "https://github.com/chrisxkoch/Movie_API/issues"
+    "url": "https://github.com/lorepirri/soflix/issues"
   },
-  "homepage": "https://github.com/chrisxkoch/Movie_API#readme",
-  "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "lodash": "^4.17.15"
-  },
-  "devDependencies": {
-    "eslint": "^6.6.0"
-  }
+  "homepage": "https://github.com/lorepirri/soflix#readme"
 }
