@@ -33,4 +33,4 @@ http.createServer((request, response) => {
 
 }).listen(8080);
 
-console.log('Soflix Node server is running on Port 8080.');
+console.log('MOVIE API Node server is running on Port 8080.');
