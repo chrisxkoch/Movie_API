@@ -6,7 +6,7 @@ const express = require('express'),
 const app = express();
 
 let Users = [
-  {id: '0', name: 'Lorenzo', username: 'lorepirri', password: '', email: '', birthday: '', favorites: ['3']}
+  {id: '0', name: 'Chris', username: 'chrisxkoch', password: '', email: '', birthday: '', favorites: ['3']}
 ];
 
 let Directors = [ 
@@ -151,6 +151,111 @@ app.get('/movies', (req, res) => {
 // Get the data about a single Movie, by title
 app.get('/movies/:title', (req, res) => {
   res.json(Movies.find( (movie) => { return movie.title.toLowerCase().includes(req.params.title.toLowerCase()); }));
+});
+
+// -- Genres --
+
+// Get the data about a single Genre, by name
+app.get('/genres/:name', (req, res) => {
+  res.json(Genres.find( (genre) => { return genre.name === req.params.name; }));
+});
+
+// -- Directors --
+
+// Get the data about a single Director, by name
+app.get('/directors/:name', (req, res) => {
+  res.json(Directors.find( (director) => { return director.name === req.params.name; }));
+});
+
+// -- Users --
+
+// Get the list of data about all Movies
+app.get('/users', (req, res) => {
+  res.json(Users);
+});
+
+// Adds data for a new user to the list of Users.
+app.post('/users', (req, res) => {
+  let newUser = req.body;
+
+  if (!newUser.name) {
+    const message = 'Missing name in request body';
+    res.status(400).send(message);
+  } else {
+    newUser.id = uuid.v4();
+    Users.push(newUser);
+    res.status(201).send(newUser);
+  }
+});
+
+// Deletes a user from the list by ID
+app.delete('/users/:id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+
+  if (user) {
+    Users = Users.filter(function(obj) { return obj.id !== req.params.id; });
+    res.status(201).send('User ' + user.name + ' with id ' + req.params.id + ' was deleted.')
+  }
+});
+
+// Get a user from the list by ID
+app.get('/users/:id', (req, res) => {
+  res.json(Users.find( (user) => { return user.id === req.params.id; }));
+});
+
+// Update the info of a user by id
+app.put('/users/:id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+  let newUserInfo = req.body;
+
+  if (user && newUserInfo) {
+    // preserve the user id
+    newUserInfo.id = user.id;
+    // preserve the user favorites
+    newUserInfo.favorites = user.favorites;    
+    // merge old info and new info (TODO: validate new info)
+    Object.assign(user, newUserInfo);
+    // merge user with update info into the list of Users
+    Users = Users.map((user) => (user.id === newUserInfo.id) ? newUserInfo : user);
+    res.status(201).send(user);
+  } else if (!newUserInfo.name) {
+    const message = 'Missing name in request body';
+    res.status(400).send(message);
+  } else {
+    res.status(404).send('User with id ' + req.params.id + ' was not found.');
+  } 
+});
+
+// -- List of Favorites --
+
+// add a favorite Movie to a User.
+app.post('/users/:id/:movie_id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+
+  if (user && movie) {
+    user.favorites = [...new Set([...user.favorites, req.params.movie_id])];
+    res.status(201).send(user);
+  } else if (!movie) {
+    res.status(404).send('Movie with id ' + req.params.movie_id + ' was not found.');
+  } else {
+    res.status(404).send('User with id ' + req.params.id + ' was not found.');
+  }
+});
+
+// remove a favorite Movie from a User.
+app.delete('/users/:id/:movie_id', (req, res) => {
+  let user = Users.find((user) => { return user.id === req.params.id; });
+  let movie = Movies.find((movie) => { return movie.id === req.params.movie_id; });
+
+  if (user && movie) {
+    user.favorites = user.favorites.filter((movie_id) => { return movie_id !== req.params.movie_id; });
+    res.status(201).send(user);
+  } else if (!movie) {
+    res.status(404).send('Movie with id ' + req.params.movie_id + ' was not found.');
+  } else {
+    res.status(404).send('User with id ' + req.params.id + ' was not found.');
+  }
 });
 
 app.use((err, req, res, next) => {
