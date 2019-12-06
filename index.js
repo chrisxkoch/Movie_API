@@ -10,6 +10,8 @@ const Users = Models.User;
 const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 const passport = require("passport");
+require('./passport');
+
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -20,6 +22,40 @@ app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
 var auth = require("./auth")(app);
+
+//Error handling middleware functions
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+  next();
+});
+
+// Homepage
+
+app.get("/", (req, res) => {
+  res.send("Welcome to myFlix!");
+});
+
+// -- Movies --
+// Gets the list of data about ALL movies
+
+app.get(
+  "/movies", passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
+// Gets the data about a single movie, by title
+
 
 //Error handling middleware functions
 
@@ -106,6 +142,7 @@ app.get(
 );
 
 // -- Users --
+
 // Gets all Users
 app.get(
   "/users",
@@ -120,6 +157,7 @@ app.get(
       });
   }
 );
+
 // Add a user
 
 app.post(
