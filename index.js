@@ -56,6 +56,40 @@ app.get(
 
 // Gets the data about a single movie, by title
 
+
+//Error handling middleware functions
+
+app.use(function(err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send("Something broke!");
+  next();
+});
+
+// Homepage
+
+app.get("/", (req, res) => {
+  res.send("Welcome to myFlix!");
+});
+
+// -- Movies --
+// Gets the list of data about ALL movies
+
+app.get(
+  "/movies",
+  (req, res) => {
+    Movies.find()
+      .then((movies) => {
+        res.status(201).json(movies);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
+// Gets the data about a single movie, by title
+
 app.get(
   "/movies/:movieId",
   (req, res) => {
