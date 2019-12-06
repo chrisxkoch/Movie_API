@@ -10,6 +10,7 @@ const Users = Models.User;
 const cors = require("cors");
 const { check, validationResult } = require("express-validator");
 const passport = require("passport");
+require("./passport");
 
 mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -40,6 +41,7 @@ app.get("/", (req, res) => {
 
 app.get(
   "/movies",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -56,6 +58,7 @@ app.get(
 
 app.get(
   "/movies/:movieId",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((movie) => {
@@ -72,6 +75,7 @@ app.get(
 
 app.get(
   "/movies/genres/:Name",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({
       "Genre.Name": req.params.Name
@@ -91,6 +95,7 @@ app.get(
 
 app.get(
   "/movies/directors/:Name",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({
       "Director.Name": req.params.Name
@@ -106,20 +111,6 @@ app.get(
 );
 
 // -- Users --
-// Gets all Users
-app.get(
-  "/users",
-  (req, res) => {
-    Users.find()
-      .then((users) => {
-        res.status(201).json(users);
-      })
-      .catch((error) => {
-        console.error(error);
-        res.status(500).send("Error: " + error);
-      });
-  }
-);
 // Add a user
 
 app.post(
@@ -172,6 +163,7 @@ app.post(
 
 app.put(
   "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
   [
     check("Username", "Username is required").isLength({ min: 5 }),
     check(
@@ -216,6 +208,7 @@ app.put(
 
 app.post(
   "/users/:Username/Movies/:MovieID",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -237,6 +230,7 @@ app.post(
 
 app.delete(
   "/users/:Username/Movies/:MovieID",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -258,6 +252,7 @@ app.delete(
 
 app.delete(
   "/users/:Username",
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
