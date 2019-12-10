@@ -110,7 +110,7 @@ app.get(
 
 // Add a user
 
-app.post("/Users",
+app.post("/users",
   [
   check('Username').isAlphanumeric(),
   check('Password').isLength({ min: 5}),
