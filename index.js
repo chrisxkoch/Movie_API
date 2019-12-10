@@ -9,7 +9,7 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const cors = require("cors");
 const passport = require("passport");
-{ check, validationResult } = require("express-validator");
+const {check, validationResult } = require('express-validator');
 
 require('./passport');
 
