@@ -14,8 +14,7 @@ require('./passport');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
-mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-wrbn7.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
-
+mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-f1pbl.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 // Middleware functions
 app.use(express.static("public"));
 app.use(morgan("common")); // Logging with Morgan
