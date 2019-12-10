@@ -14,7 +14,8 @@ require('./passport');
 const { check, validationResult } = require('express-validator');
 
 
-mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
+// mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-wrbn7.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true });
 
 // Cors data
 var allowedOrigins = ['http://localhost:8080', 'http://testsite.com'];
