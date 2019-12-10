@@ -8,7 +8,6 @@ const Models = require("./models.js");
 const Movies = Models.Movie;
 const Users = Models.User;
 const cors = require("cors");
-const { check, validationResult } = require("express-validator");
 const passport = require("passport");
 require('./passport');
 
