@@ -11,7 +11,7 @@ const cors = require("cors");
 const passport = require("passport");
 const {check, validationResult } = require('express-validator');
 
-require('./passport');
+require('./passport.js');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,7 +22,7 @@ app.use(morgan("common")); // Logging with Morgan
 app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
-var auth = require("./auth")(app);
+var auth = require("./auth.js")(app);
 
 //Error handling middleware functions
 
