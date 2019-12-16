@@ -9,9 +9,9 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const cors = require("cors");
 const passport = require("passport");
-const {check, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
-require('./passport');
+require('/passport');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,11 +22,11 @@ app.use(morgan("common")); // Logging with Morgan
 app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
-var auth = require("./auth")(app);
+var auth = require("/auth")(app);
 
 //Error handling middleware functions
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("Something broke!");
   next();
@@ -42,7 +42,6 @@ app.get("*", (req, res) => {
 
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -59,7 +58,6 @@ app.get(
 
 app.get(
   "/movies/:movieId",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((movie) => {
@@ -76,7 +74,6 @@ app.get(
 
 app.get(
   "/movies/genres/:Name",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({
       "Genre.Name": req.params.Name
@@ -95,7 +92,6 @@ app.get(
 
 app.get(
   "/movies/directors/:Name",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({
       "Director.Name": req.params.Name
@@ -114,12 +110,12 @@ app.get(
 
 app.post("/users",
   [
-  check('Username').isAlphanumeric(),
-  check('Password').isLength({ min: 5}),
-  check('Email').normalizeEmail().isEmail()
+    check('Username').isAlphanumeric(),
+    check('Password').isLength({ min: 5 }),
+    check('Email').normalizeEmail().isEmail()
   ],
   (req, res) => {
-      // check validation object for errors
+    // check validation object for errors
     var errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -157,10 +153,9 @@ app.post("/users",
 
 app.put(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
   [
     check('Username').isAlphanumeric(),
-    check('Password').isLength({ min: 5}),
+    check('Password').isLength({ min: 5 }),
     check('Email').normalizeEmail().isEmail()
   ],
   (req, res) => {
@@ -196,7 +191,6 @@ app.put(
 
 app.post(
   "/users/:Username/Movies/:MovieID",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -218,7 +212,6 @@ app.post(
 
 app.delete(
   "/users/:Username/Movies/:MovieID",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
@@ -240,7 +233,6 @@ app.delete(
 
 app.delete(
   "/users/:Username",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Users.findOneAndRemove({ Username: req.params.Username })
       .then((user) => {
@@ -260,6 +252,6 @@ app.delete(
 // Listen for requests on port 8080
 
 var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function() {
-console.log("Listening on Port 3000");
+app.listen(port, "0.0.0.0", function () {
+  console.log("Listening on Port 3000");
 });
