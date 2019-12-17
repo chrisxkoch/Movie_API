@@ -40,6 +40,41 @@ app.get("/", (req, res) => {
 
 // Gets the list of data about ALL movies
 
+
+// Add new Movie
+
+app.post("/movies",
+  (req, res) => {
+    Movies.findOne({ Title: req.body.Title })
+      .then((movie) => {
+        if (movie) {
+          return res.status(400).send(req.body.Title + " already exists");
+        } else {
+          Movies.create({
+            Title: req.body.Title,
+            Description: req.body.Description,
+            Genre: req.body.Genre,
+            Director: req.body.Director,
+            Imagepath: req.body.Imagepath
+          })
+            .then((movie) => {
+              res.status(201).json(movie);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
+// Gets the list of data about ALL movies
+
 app.get(
   "/movies",
   (req, res) => {
@@ -107,7 +142,6 @@ app.get(
 );
 
 // Add a user
-
 app.post("/users",
   [
     check('Username').isAlphanumeric(),
