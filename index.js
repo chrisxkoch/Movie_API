@@ -9,9 +9,9 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const cors = require("cors");
 const passport = require("passport");
-const {check, validationResult } = require('express-validator');
+const { check, validationResult } = require('express-validator');
 
-require('./passport.js');
+require('./passport');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,11 +22,11 @@ app.use(morgan("common")); // Logging with Morgan
 app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
-var auth = require("./auth.js")(app);
+var auth = require("./auth")(app);
 
 //Error handling middleware functions
 
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("Something broke!");
   next();
@@ -34,7 +34,7 @@ app.use(function(err, req, res, next) {
 
 // Homepage
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
 
@@ -114,12 +114,12 @@ app.get(
 
 app.post("/users",
   [
-  check('Username').isAlphanumeric(),
-  check('Password').isLength({ min: 5}),
-  check('Email').normalizeEmail().isEmail()
+    check('Username').isAlphanumeric(),
+    check('Password').isLength({ min: 5 }),
+    check('Email').normalizeEmail().isEmail()
   ],
   (req, res) => {
-      // check validation object for errors
+    // check validation object for errors
     var errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -160,7 +160,7 @@ app.put(
   passport.authenticate("jwt", { session: false }),
   [
     check('Username').isAlphanumeric(),
-    check('Password').isLength({ min: 5}),
+    check('Password').isLength({ min: 5 }),
     check('Email').normalizeEmail().isEmail()
   ],
   (req, res) => {
@@ -260,6 +260,6 @@ app.delete(
 // Listen for requests on port 8080
 
 var port = process.env.PORT || 3000;
-app.listen(port, "0.0.0.0", function() {
-console.log("Listening on Port 3000");
+app.listen(port, "0.0.0.0", function () {
+  console.log("Listening on Port 3000");
 });
