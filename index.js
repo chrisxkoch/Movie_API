@@ -9,9 +9,10 @@ const Movies = Models.Movie;
 const Users = Models.User;
 const cors = require("cors");
 const passport = require("passport");
+require('./passport');
+var allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://myflixbysophie.herokuapp.com'];
 const { check, validationResult } = require('express-validator');
 
-require('./passport');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -118,7 +119,7 @@ app.get(
 // Gets the data about a single movie, by title
 
 app.get(
-  "/movies/:movieId", passport.authenticate("jwt", { session: false }),
+  "/movies/:Title", passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((movie) => {
@@ -134,12 +135,12 @@ app.get(
 // Get data about a movie genre, by name
 
 app.get(
-  "/movies/genres/:Name",
+  "/movies/genres/:Genre",
   passport.authenticate("jwt", { session: false }),
 
   (req, res) => {
     Movies.findOne({
-      "Genre.Name": req.params.Name
+      "Genre.Name": req.params.Genre
     })
       .then((movies) => {
         res.json(movies.Genre);
@@ -174,8 +175,8 @@ app.get(
 // Add a user
 app.post("/users",
   [
-    check('Username').isAlphanumeric(),
-    check('Password').isLength({ min: 5 }),
+    check('Username', 'Not valid').isAlphanumeric(),
+    check('Password').exists(),
     check('Email').normalizeEmail().isEmail()
   ], passport.authenticate("jwt", { session: false }),
   (req, res) => {
@@ -217,12 +218,13 @@ app.post("/users",
 
 app.put(
   "/users/:Username",
-  [
-    check('Username').isAlphanumeric(),
-    check('Password').isLength({ min: 5 }),
-    check('Email').normalizeEmail().isEmail()
-  ], passport.authenticate("jwt", { session: false }),
+  passport.authenticate("jwt", { session: false }),
   (req, res) => {
+    req.checkBody('Username', 'Username is required').notEmpty();
+    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric();
+    req.checkBody('Password', 'Password is required').notEmpty();
+    req.checkBody('Email', 'Email is required').notEmpty();
+    req.checkBody('Email', 'Email does not appear to be valid').isEmail();
     var errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
