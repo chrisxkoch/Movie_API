@@ -172,14 +172,28 @@ app.get(
       });
   }
 );
+// Get Single User
 
+app.get(
+  "/users/:Username", passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Users.findOne({ Username: req.params.Username })
+      .then((user) => {
+        res.json(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 // Add a user
 app.post("/users",
   [
     check('Username', 'Not valid').isAlphanumeric(),
     check('Password').exists(),
     check('Email').normalizeEmail().isEmail()
-  ], passport.authenticate("jwt", { session: false }),
+  ],
   (req, res) => {
     // check validation object for errors
     var errors = validationResult(req);
@@ -219,19 +233,20 @@ app.post("/users",
 
 app.put(
   "/users/:Username",
+  [
+    check('Username', 'Not valid').isAlphanumeric(),
+    check('Password').exists(),
+    check('Email').normalizeEmail().isEmail()
+  ],
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    req.checkBody('Username', 'Username is required').notEmpty();
-    req.checkBody('Username', 'Username contains non alphanumeric characters - not allowed.').isAlphanumeric();
-    req.checkBody('Password', 'Password is required').notEmpty();
-    req.checkBody('Email', 'Email is required').notEmpty();
-    req.checkBody('Email', 'Email does not appear to be valid').isEmail();
 
-    var errors = validationErrors(req);
+
+    var errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    Users.update(
+    Users.findOneAndUpdate(
       { Username: req.params.Username },
       {
         $set: {
