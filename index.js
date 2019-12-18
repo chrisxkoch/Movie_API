@@ -11,7 +11,6 @@ const cors = require("cors");
 const passport = require("passport");
 require('./passport');
 var allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://myflixbysophie.herokuapp.com'];
-const { check, validationResult } = require('express-validator');
 
 
 mongoose.set('useFindAndModify', false);
@@ -31,6 +30,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send("Something broke!");
   next();
 });
+
+const { check, validationResult } = require('express-validator');
 
 // Homepage
 
@@ -225,17 +226,17 @@ app.put(
     req.checkBody('Password', 'Password is required').notEmpty();
     req.checkBody('Email', 'Email is required').notEmpty();
     req.checkBody('Email', 'Email does not appear to be valid').isEmail();
-    var errors = validationResult(req);
+
+    var errors = validationErrors(req);
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
-    var hashedPassword = Users.hashPassword(req.body.Password);
     Users.update(
       { Username: req.params.Username },
       {
         $set: {
           Username: req.body.Username,
-          Password: hashedPassword,
+          Password: req.body.Password,
           Email: req.body.Email,
           Birthday: req.body.Birthday
         }
