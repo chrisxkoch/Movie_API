@@ -11,7 +11,7 @@ const cors = require("cors");
 const passport = require("passport");
 const { check, validationResult } = require('express-validator');
 
-require('/passport');
+require('./passport');
 
 mongoose.set('useFindAndModify', false);
 // mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true })
@@ -22,10 +22,9 @@ app.use(morgan("common")); // Logging with Morgan
 app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
-var auth = require("/auth")(app);
+var auth = require("./auth")(app);
 
 //Error handling middleware functions
-
 app.use(function (err, req, res, next) {
   console.error(err.stack);
   res.status(500).send("Something broke!");
@@ -34,9 +33,68 @@ app.use(function (err, req, res, next) {
 
 // Homepage
 
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
+
+// Add new Movie
+app.post("/movies",
+  (req, res) => {
+    Movies.findOne({ Title: req.body.Title })
+      .then((movie) => {
+        if (movie) {
+          return res.status(400).send(req.body.Title + " already exists");
+        } else {
+          Movies.create({
+            Title: req.body.Title,
+            Description: req.body.Description,
+            Genre: req.body.Genre,
+            Director: req.body.Director,
+            Imagepath: req.body.Imagepath
+          })
+            .then((movie) => {
+              res.status(201).json(movie);
+            })
+            .catch((error) => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
+// Update Movie
+app.put(
+  "/movies/:Title",
+  (req, res) => {
+    Movies.update(
+      { Title: req.params.Title },
+      {
+        $set: {
+          Title: req.body.Title,
+          Description: req.body.Description,
+          Genre: req.body.Genre,
+          Director: req.body.Director,
+          Imagepath: req.body.Imagepath
+        }
+      },
+      { new: true }, // This line makes sure that the updated document is returned
+      (error, updatedMovie) => {
+        if (error) {
+          console.error(error);
+          res.status(500).send("Error: " + error);
+        } else {
+          res.json(updatedMovie);
+        }
+      }
+    );
+  }
+);
 
 // Gets the list of data about ALL movies
 
@@ -107,7 +165,6 @@ app.get(
 );
 
 // Add a user
-
 app.post("/users",
   [
     check('Username').isAlphanumeric(),
