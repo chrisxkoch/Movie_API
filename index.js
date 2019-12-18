@@ -279,7 +279,6 @@ app.post(
 app.delete(
   "/users/:Username/Movies/:MovieID",
   passport.authenticate("jwt", { session: false }),
-
   (req, res) => {
     Users.findOneAndUpdate(
       { Username: req.params.Username },
