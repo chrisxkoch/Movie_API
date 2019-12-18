@@ -38,11 +38,7 @@ app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
 
-// Gets the list of data about ALL movies
-
-
 // Add new Movie
-
 app.post("/movies",
   (req, res) => {
     Movies.findOne({ Title: req.body.Title })
