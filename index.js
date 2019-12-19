@@ -136,7 +136,7 @@ app.get(
 app.get(
   "/movies/:Title",
   (req, res) => {
-    Movies.findOne({ Title: req.params.Title })
+    Movies.findOne({ Title: req.body.Title })
       .then((movies) => {
         res.json(movies);
       })
