@@ -41,7 +41,6 @@ app.get("/", (req, res) => {
 
 // Add new Movie
 app.post("/movies",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.findOne({ Title: req.body.Title })
       .then((movie) => {
