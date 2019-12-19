@@ -101,6 +101,7 @@ app.put(
           Description: req.body.Description,
           Genre: req.body.Genre,
           Director: req.body.Director,
+          Actors: req.body.Actors,
           Imagepath: req.body.Imagepath
         }
       },
