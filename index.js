@@ -75,7 +75,7 @@ app.put(
   "/movies/:Title",
   (req, res) => {
     Movies.findOneAndUpdate(
-      { Title: req.params.Title },
+      { Title: req.body.Title },
       {
         $set: {
           Title: req.body.Title,
