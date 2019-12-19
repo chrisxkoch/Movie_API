@@ -33576,7 +33576,7 @@ function (_React$Component) {
         className: "value"
       }, movie.Description)), _react.default.createElement("img", {
         className: "movie-poster",
-        src: movie.ImageUrl
+        src: movie.ImagePath
       }), _react.default.createElement("div", {
         className: "movie-genre"
       }, _react.default.createElement("div", {
@@ -33869,7 +33869,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51814" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50375" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
