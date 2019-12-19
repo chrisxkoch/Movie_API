@@ -93,7 +93,7 @@ app.delete(
 app.put(
   "/movies/:Title",
   (req, res) => {
-    Movies.update(
+    Movies.findOneAndUpdate(
       { Title: req.params.Title },
       {
         $set: {
