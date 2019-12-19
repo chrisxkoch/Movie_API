@@ -124,8 +124,8 @@ app.get(
   "/movies",
   (req, res) => {
     Movies.find()
-      .then((movies) => {
-        res.status(201).json(movies);
+      .then((movie) => {
+        res.status(201).json(movie);
       })
       .catch((error) => {
         console.error(error);
@@ -139,8 +139,8 @@ app.get(
   "/movies/:Title",
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-      .then((movies) => {
-        res.json(movies);
+      .then((movie) => {
+        res.json(movie);
       })
       .catch((error) => {
         console.error(error);
@@ -171,6 +171,7 @@ app.get(
 
 app.get(
   "/movies/directors/:Name",
+
   (req, res) => {
     Movies.findOne({
       "Director.Name": req.params.Name
