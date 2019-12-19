@@ -135,13 +135,12 @@ app.get(
 );
 
 // Gets the data about a single movie, by title
-
 app.get(
   "/movies/:Title",
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-      .then((movie) => {
-        res.json(movie);
+      .then((movies) => {
+        res.json(movies);
       })
       .catch((error) => {
         console.error(error);
@@ -172,8 +171,6 @@ app.get(
 
 app.get(
   "/movies/directors/:Name",
-
-
   (req, res) => {
     Movies.findOne({
       "Director.Name": req.params.Name
