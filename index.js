@@ -52,7 +52,7 @@ app.post("/movies",
             Description: req.body.Description,
             Genre: req.body.Genre,
             Director: req.body.Director,
-            Imagepath: req.body.Imagepath
+            ImagePath: req.body.ImagePath
           })
             .then((movie) => {
               res.status(201).json(movie);
