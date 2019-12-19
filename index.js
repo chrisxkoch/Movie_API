@@ -70,6 +70,25 @@ app.post("/movies",
   }
 );
 
+// Delete a Movie
+app.delete(
+  "/movie/:Title",
+  (req, res) => {
+    Movies.findOneAndRemove({ Title: req.params.Title })
+      .then((movie) => {
+        if (!movie) {
+          res.status(400).send(req.params.Title + " was not found");
+        } else {
+          res.status(200).send(req.params.Title + " was deleted.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
 // Update Movie
 app.put(
   "/movies/:Title",
