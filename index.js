@@ -92,30 +92,31 @@ app.delete(
 // Update Movie
 app.put(
   "/movies/:Title",
-  (req, res) => {
-    Movies.findOneAndUpdate(
-      { Title: req.params.Title },
-      {
-        $set: {
-          Title: req.body.Title,
-          Description: req.body.Description,
-          Genre: req.body.Genre,
-          Director: req.body.Director,
-          Actors: req.body.Actors,
-          ImagePath: req.body.ImagePath
-        }
-      },
-      { new: true }, // This line makes sure that the updated document is returned
-      (error, updatedMovie) => {
-        if (error) {
-          console.error(error);
-          res.status(500).send("Error: " + error);
-        } else {
-          res.json(updatedMovie);
-        }
+  console.log(Headers ====)
+    (req, res) => {
+  Movies.findOneAndUpdate(
+    { Title: req.params.Title },
+    {
+      $set: {
+        Title: req.body.Title,
+        Description: req.body.Description,
+        Genre: req.body.Genre,
+        Director: req.body.Director,
+        Actors: req.body.Actors,
+        ImagePath: req.body.ImagePath
       }
-    );
-  }
+    },
+    { new: true }, // This line makes sure that the updated document is returned
+    (error, updatedMovie) => {
+      if (error) {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      } else {
+        res.json(updatedMovie);
+      }
+    }
+  );
+}
 );
 
 // Gets the list of data about ALL movies
