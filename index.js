@@ -138,14 +138,13 @@ app.get(
   (req, res) => {
     Movies.findOne({ Title: req.body.Title })
       .then((movie) => {
-        res.json(movie);
+        res.json(movie)
       })
       .catch((error) => {
         console.error(error);
         res.status(500).send("Error: " + error);
       });
-  }
-);
+  });
 
 // Get data about a movie genre, by name
 
