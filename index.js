@@ -178,7 +178,7 @@ app.get("/users"),
         console.error(err);
         res.status(500).send('Error: ' + err);
       });
-  });
+  };
 // Get Single User
 app.get("/users/:Username"),
   (req, res) => {
@@ -191,7 +191,6 @@ app.get("/users/:Username"),
         res.status(500).send("Error: " + error);
       });
   }
-);
 // Add a user
 app.post("/users",
   [
