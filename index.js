@@ -38,7 +38,7 @@ const { check, validationResult } = require('express-validator');
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
-
+////////MOVIES////////
 // Add new Movie
 app.post("/movies",
   (req, res) => {
@@ -52,7 +52,7 @@ app.post("/movies",
             Description: req.body.Description,
             Genre: req.body.Genre,
             Director: req.body.Director,
-            Imagepath: req.body.Imagepath
+            Imagepath: req.body.Imagepath,
           })
             .then((movie) => {
               res.status(201).json(movie);
@@ -165,9 +165,22 @@ app.get(
       });
   }
 );
+
+//////////USERS/////////
+// get all users
+app.get("/users"),
+  (req, res) => {
+    Users.find()
+      .then(function (users) {
+        res.status(201).json(users)
+      })
+      .catch(function (err) {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+      });
+  });
 // Get Single User
-app.get(
-  "/users/:Username", passport.authenticate("jwt", { session: false }),
+app.get("/users/:Username"),
   (req, res) => {
     Users.findOne({ Username: req.params.Username })
       .then((user) => {
