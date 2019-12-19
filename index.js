@@ -72,7 +72,7 @@ app.post("/movies",
 
 // Delete a Movie
 app.delete(
-  "/movie/:Title",
+  "/movies/:Title",
   (req, res) => {
     Movies.findOneAndRemove({ Title: req.params.Title })
       .then((movie) => {
@@ -102,7 +102,7 @@ app.put(
           Genre: req.body.Genre,
           Director: req.body.Director,
           Actors: req.body.Actors,
-          Imagepath: req.body.Imagepath
+          ImagePath: req.body.ImagePath
         }
       },
       { new: true }, // This line makes sure that the updated document is returned
