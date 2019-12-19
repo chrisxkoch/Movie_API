@@ -139,8 +139,8 @@ app.get(
   "/movies/:Title",
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
-      .then((movie) => {
-        res.json(movie);
+      .then((movies) => {
+        res.json(movies);
       })
       .catch((error) => {
         console.error(error);
