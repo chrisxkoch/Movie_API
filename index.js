@@ -74,7 +74,6 @@ app.post("/movies",
 // Update Movie
 app.put(
   "/movies/:Title",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.update(
       { Title: req.params.Title },
@@ -104,7 +103,6 @@ app.put(
 
 app.get(
   "/movies",
-  passport.authenticate("jwt", { session: false }),
   (req, res) => {
     Movies.find()
       .then((movies) => {
@@ -120,7 +118,7 @@ app.get(
 // Gets the data about a single movie, by title
 
 app.get(
-  "/movies/:Title", passport.authenticate("jwt", { session: false }),
+  "/movies/:Title",
   (req, res) => {
     Movies.findOne({ Title: req.params.Title })
       .then((movie) => {
@@ -137,8 +135,6 @@ app.get(
 
 app.get(
   "/movies/genres/:Genre",
-  passport.authenticate("jwt", { session: false }),
-
   (req, res) => {
     Movies.findOne({
       "Genre.Name": req.params.Genre
@@ -157,7 +153,7 @@ app.get(
 
 app.get(
   "/movies/directors/:Name",
-  passport.authenticate("jwt", { session: false }),
+
 
   (req, res) => {
     Movies.findOne({
