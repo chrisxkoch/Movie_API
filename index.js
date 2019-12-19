@@ -34,7 +34,6 @@ app.use(function (err, req, res, next) {
 const { check, validationResult } = require('express-validator');
 
 // Homepage
-
 app.get("/", (req, res) => {
   res.send("Welcome to myFlix!");
 });
@@ -74,12 +73,12 @@ app.post("/movies",
 app.delete(
   "/movies/:Title",
   (req, res) => {
-    Movies.findOneAndRemove({ Title: req.params.Title })
+    Movies.findOneAndRemove({ Title: req.body.Title })
       .then((movie) => {
         if (!movie) {
-          res.status(400).send(req.params.Title + " was not found");
+          res.status(400).send(req.body.Title + " was not found");
         } else {
-          res.status(200).send(req.params.Title + " was deleted.");
+          res.status(200).send(req.body.Title + " was deleted.");
         }
       })
       .catch((error) => {
@@ -92,7 +91,6 @@ app.delete(
 // Update Movie
 app.put(
   "/movies/:Title",
-  console.log("Headers===="),
   (req, res) => {
     Movies.findOneAndUpdate(
       { Title: req.params.Title },
@@ -120,7 +118,6 @@ app.put(
 );
 
 // Gets the list of data about ALL movies
-
 app.get(
   "/movies",
   (req, res) => {
