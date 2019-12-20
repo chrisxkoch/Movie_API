@@ -52,7 +52,7 @@ app.post("/movies",
             Description: req.body.Description,
             Genre: req.body.Genre,
             Director: req.body.Director,
-            Imagepath: req.body.Imagepath,
+            ImagePath: req.body.ImagePath,
           })
             .then((movie) => {
               res.status(201).json(movie);
@@ -97,7 +97,24 @@ app.put(
     );
   }
 );
-
+// Delete a movie by title
+app.delete(
+  "/movies/:Title",
+  (req, res) => {
+    Movies.findOneAndRemove({ Title: req.body.Title })
+      .then((movie) => {
+        if (!movie) {
+          res.status(400).send(req.body.Title + " was not found");
+        } else {
+          res.status(200).send(req.body.Title + " was deleted.");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
 // Gets the list of data about ALL movies
 app.get(
   "/movies",
