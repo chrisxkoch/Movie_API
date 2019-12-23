@@ -1,50 +1,62 @@
+import React from 'react';
+import PropTypes from 'prop-types';
 
-import React from "react";
-import { Link } from "react-router-dom";
-import Button from "react-bootstrap/Button";
+import Media from 'react-bootstrap/Media';
+
+// imports for files to bundle
+import './movie-view.scss';
 
 export class MovieView extends React.Component {
   constructor() {
     super();
+
     this.state = {};
   }
 
   render() {
     const { movie } = this.props;
+
     if (!movie) return null;
+
     return (
-      <div
-        className="container-fluid align-items-center ml-3 mt-2"
-        style={{ width: "660px" }}
-      >
-        <div className="movie-title">
-          <h1 className="value">{movie.Title}</h1>
-        </div>
-        <img
-          className="movie-poster"
-          src="http://via.placeholder.com/640x360"
-        />
-        <div className="movie-description">
-          <div className="mt-1 mb-3">{movie.Description}</div>
-        </div>
-        <div className="movie-genre">
-          Genre:
-          <Link to={`/genres/${movie.Genre.Name}`}>
-            <Button variant="link">{movie.Genre.Name}</Button>
-          </Link>
-        </div>
-        <div className="movie-director">
-          Director:
-          <Link to={`/directors/${movie.Director.Name}`}>
-            <Button variant="link">{movie.Director.Name}</Button>
-          </Link>
-        </div>
-        <Link to={`/`}>
-          <Button className="mt-3" variant="primary">
-            Back to Movies
-          </Button>
-        </Link>
+      <div className="movie-view">
+        <h1>{movie.Title}</h1>
+        <Media className="d-flex flex-column flex-md-row align-items-center">
+          <Media.Body>
+
+            <h6>Genre: {movie.Genre.Name}</h6>
+            <h6>Director: {movie.Director.Name}</h6>
+            <br />
+            <h6>Description</h6>
+            <p>
+              {movie.Description}
+            </p>
+          </Media.Body>
+          <img
+            width={220}
+            height={326}
+            className="ml-3"
+            src={movie.ImagePath}
+            alt="Generic placeholder"
+          />
+        </Media>
       </div>
     );
   }
 }
+
+MovieView.propTypes = {
+  movie: PropTypes.shape({
+    Title: PropTypes.string,
+    ImagePath: PropTypes.string,
+    Description: PropTypes.string,
+    Genre: PropTypes.exact({
+      _id: PropTypes.string,
+      Name: PropTypes.string,
+      Description: PropTypes.string
+    }),
+    Director: PropTypes.shape({
+      Name: PropTypes.string
+    })
+  }).isRequired
+};
