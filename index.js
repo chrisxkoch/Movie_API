@@ -1,4 +1,3 @@
-
 ////////////////REQUIRED MODULES/////////////////////
 const path = require("path");
 const express = require('express');
@@ -12,7 +11,6 @@ const passport = require('passport');
 const Models = require('./models.js');
 
 require('./passport');
-var allowedOrigins = ['http://localhost:8080', 'http://testsite.com', 'http://localhost:1234', 'https://myflixbysophie.herokuapp.com'];
 
 //creating variable to use express functionality
 const app = express();
@@ -24,10 +22,7 @@ const Users = Models.User;
 /////////////CONNECT TO MONGODB//////////////////
 
 //connecting Mongoose to the database
-//mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
-//mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-f1pbl.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
-
 
 /////////////MIDDLEWARE FUNCTIONS////////////////
 
@@ -120,6 +115,7 @@ app.get('/movies/directors/:Name', passport.authenticate('jwt', { session: false
       res.status(500).send("Error:" + err);
     });
 });
+
 
 // Add new Movie
 app.post("/movies",
