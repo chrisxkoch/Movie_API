@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
   box-sizing: border-box;
 }
@@ -209,6 +210,25 @@ img.movie-poster {
 }
 * {
   box-sizing: border-box;
+=======
+/* ===GLOBAL=== */
+/* ===PRIMARY=== */
+/* ===FORMS=== */
+/* ===GLOBAL=== */
+/* ===PRIMARY=== */
+.soflix {
+  color: steelblue;
+>>>>>>> b75f8a2ebb77f50d284f258fcc2a418b0847c0c9
+}
+
+/* ===FORMS=== */
+.form-container {
+  position: relative;
+  padding: 1rem;
+  margin-right: 0;
+  margin-left: 0;
+  border: 0.2rem solid #ececec;
+  border-radius: 8px;
 }
 
 /*# sourceMappingURL=/src.78399e21.css.map */

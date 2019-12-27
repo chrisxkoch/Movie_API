@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "presets": [
     "env",
@@ -6,4 +7,8 @@
   "plugins": [
     "transform-class-properties"
   ]
+=======
+{
+  "presets": ["env", "react"]
+>>>>>>> b75f8a2ebb77f50d284f258fcc2a418b0847c0c9
 }

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
@@ -27,3 +28,26 @@ const container = document.getElementsByClassName('app-container')[0];
 
 // Tell React to render our app in the root DOM element
 ReactDOM.render(React.createElement(MyFlixApplication), container);
+=======
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+// imports for files to bundle
+import './index.scss';
+
+// import components
+import { MainView } from './components/main-view/main-view';
+
+// main component
+class SoFlixApplication extends React.Component {
+  render() {
+    return (<MainView /> );
+  }
+}
+
+// root element of the app
+const container = document.getElementsByClassName('app-container')[0];
+
+// set app root DOM element
+ReactDOM.render(React.createElement(SoFlixApplication), container);
+>>>>>>> b75f8a2ebb77f50d284f258fcc2a418b0847c0c9
