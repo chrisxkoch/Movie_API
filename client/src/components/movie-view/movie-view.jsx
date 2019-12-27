@@ -32,7 +32,7 @@ export function MovieView(props) {
 
   return (
     <Card className="movie-view" style={{ width: '45rem' }}>
-      <span> <img className="movie-poster" src={movie.ImageUrl} />
+      <span> <img className="movie-poster" src={movie.ImagePath} />
 
         <Card.Body>
           <Card.Title className="movie-title">{movie.Title}</Card.Title>
