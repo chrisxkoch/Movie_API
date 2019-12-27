@@ -1,0 +1,53 @@
+* {
+  box-sizing: border-box;
+}
+
+.update-form {
+  justify-content: center;
+  margin: auto;
+  font-family: 'Noto Sans', sans-serif;
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding:20px;
+  width:50%;
+}
+
+.profile-view{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+div.profile-title{
+  text-align: center;
+  font-weight: bold;
+}
+
+.btn-register, .btn-delete{
+  margin: 10px;
+}
+
+.card-img-top.profile-logo{
+    width: 30%;
+  }
+
+.row{
+  margin-top:10px;
+}
+
+p.favouriteMovies{
+  display: inline;
+}
+
+img.update-img{
+  padding:10px;
+}
+
+p.update-title{
+  font-size:20px;
+}
+
+div.profile-view.card{
+  margin:auto;
+}

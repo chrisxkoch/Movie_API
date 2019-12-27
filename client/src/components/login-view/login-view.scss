@@ -1,0 +1,28 @@
+* {
+    box-sizing: border-box;
+}
+
+.login-form {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #17A2B8;
+  padding: 10px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.btn-submit, .btn-register{
+  margin: 10px;
+}
+
+img.camera-logo{
+  width:45px;
+}
+
+h1.main-title{
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+
+.form-group{
+  margin-top:12px;
+}

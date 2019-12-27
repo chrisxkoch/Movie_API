@@ -1,0 +1,35 @@
+* {
+    box-sizing: border-box;
+}
+
+.movie-view {
+    display: flex;
+    margin: auto;
+    font-family: 'Noto Sans', sans-serif;
+  }
+
+  .button-back{
+    margin:20px;
+    padding:5px;
+  }
+
+.movie-title{
+  font-weight: bold;
+  text-align: center;
+}
+
+.btn-sm {
+  margin:6px;
+}
+
+p.movie-info{
+  display: inline;
+}
+
+img.movie-poster{
+  float: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 35%;
+  padding:10px;
+}

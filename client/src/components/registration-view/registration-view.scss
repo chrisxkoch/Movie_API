@@ -1,0 +1,27 @@
+* {
+    box-sizing: border-box;
+}
+
+.registration-form {
+  margin: 0 auto;
+  width: 50%;
+  border: 1px solid #8B9BA5;
+  padding: 10px;
+  font-family: 'Noto Sans', sans-serif;
+}
+
+.button-register{
+  background-color:#8B9BA5;
+}
+
+h4 {
+  text-align:center;
+  margin:10px auto;
+}
+
+img.camera-logo{
+  width:45px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
