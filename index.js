@@ -25,7 +25,8 @@ const Users = Models.User;
 
 //connecting Mongoose to the database
 //mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
-mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-f1pbl.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+//mongoose.connect('mongodb+srv://myFlixDBadmin:Zeropunk71!@myflixdb-f1pbl.mongodb.net/test?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true });
 
 
 /////////////MIDDLEWARE FUNCTIONS////////////////
