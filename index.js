@@ -23,7 +23,6 @@ app.use(bodyParser.json()); // Using bodyParser
 app.use(cors()); // Using cors
 
 var auth = require("./auth")(app);
-
 //Error handling middleware functions
 app.use(function (err, req, res, next) {
   console.error(err.stack);
